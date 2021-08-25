@@ -1,0 +1,9 @@
+<resources>
+    <!-- The strings used for UI text and hints -->
+    <string name="app_name">Project 1 Dylan Herthoge</string>
+    <string name="greeting_message">Hello, world. Dylan Herthoge, Junior</string>
+    <string name="convert">Convert</string>
+    <string name="minutes_hint">Enter minutes</string>
+    <string name="zero_seconds">0 seconds</string>
+    <string name="equals_sign">=</string>
+</resources>
