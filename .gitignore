@@ -1,3 +1,6 @@
+# Zip files to turn into Canvas
+*.zip
+
 # Built application files
 *.apk
 *.aar
