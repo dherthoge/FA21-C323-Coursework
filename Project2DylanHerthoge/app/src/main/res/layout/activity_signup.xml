@@ -7,7 +7,7 @@
     tools:context=".SignUpActivity">
 
     <EditText
-        android:id="@+id/nameEdtTxt"
+        android:id="@+id/signUpNameEdtTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
@@ -19,7 +19,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/passwordEdtTxt"
+        android:id="@+id/signUpPasswordEdtTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -29,10 +29,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintTop_toBottomOf="@+id/signUpUsernameEdtTxt" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/signUpUsernameEdtTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -41,10 +41,10 @@
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nameEdtTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/signUpNameEdtTxt" />
 
     <EditText
-        android:id="@+id/confirmPasswordEdtTxt"
+        android:id="@+id/signUpConfirmPasswordEdtTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -53,27 +53,29 @@
         android:inputType="textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEdtTxt" />
+        app:layout_constraintTop_toBottomOf="@+id/signUpPasswordEdtTxt" />
 
     <Button
-        android:id="@+id/signUpBtn"
+        android:id="@+id/signUpSignUpBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        android:onClick="toLandingActivity"
         android:text="Sign Up"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
+        android:onClick="signUpClicked"
+        app:layout_constraintBottom_toTopOf="@+id/signUpSignInBtn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/signUpSignInBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="64dp"
         android:text="Sign In"
+        android:onClick="signInClicked"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="OnClick" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

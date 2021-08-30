@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Project2DylanHerthoge">
         <activity
+            android:name=".SignInActivity"
+            android:exported="true" />
+        <activity
             android:name=".BmiCalculatorActivity"
             android:exported="true" />
         <activity
