@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Project3DylanHerthoge</string>
+    <string name="plus">+</string>
+    <string name="minus">-</string>
+
+    <string-array name="titles">
+        <item>Take out the trash</item>
+        <item>Clean my room</item>
+        <item>Water the dog</item>
+    </string-array>
+
+    <string-array name="dates">
+        <item>Tomorrow</item>
+        <item>12/25</item>
+        <item>Never</item>
+    </string-array>
+
+    <string-array name="priorities">
+        <item>LOW</item>
+        <item>HIGH</item>
+        <item>HIGH</item>
+    </string-array>
+</resources>
