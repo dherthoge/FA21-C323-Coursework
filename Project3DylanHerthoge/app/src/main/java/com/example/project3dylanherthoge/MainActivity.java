@@ -15,16 +15,12 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ShareActionProvider;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Scanner;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,8 +32,8 @@ public class MainActivity extends AppCompatActivity {
             logged_dates = new ArrayList(),
             logged_priorities = new ArrayList();
     private ArrayList<ListItem> listItems = new ArrayList();
-    private boolean deleteMode = false;
     private ArrayAdapter<ListItem> listViewAdapter;
+    private boolean deleteMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,17 +48,16 @@ public class MainActivity extends AppCompatActivity {
     private void populateListItems() {
         loadListItems();
 
-        listItems.clear();
-        Collections.addAll(titles, getResources().getStringArray(R.array.titles));
-        Collections.addAll(dates, getResources().getStringArray(R.array.dates));
-        Collections.addAll(priorities, getResources().getStringArray(R.array.priorities));
-        Collections.addAll(timestamps, getResources().getStringArray(R.array.timestamps));
+//        Collections.addAll(titles, getResources().getStringArray(R.array.titles));
+//        Collections.addAll(dates, getResources().getStringArray(R.array.dates));
+//        Collections.addAll(priorities, getResources().getStringArray(R.array.priorities));
+//        Collections.addAll(timestamps, getResources().getStringArray(R.array.timestamps));
+//        Collections.addAll(logged_titles, getResources().getStringArray(R.array.titles));
+//        Collections.addAll(logged_dates, getResources().getStringArray(R.array.dates));
+//        Collections.addAll(logged_priorities, getResources().getStringArray(R.array.priorities));
         for (int i = 0; i < titles.size(); i++)
                 listItems.add(new ListItem(titles.get(i), dates.get(i), priorities.get(i)));
 
-        Collections.addAll(logged_titles, getResources().getStringArray(R.array.titles));
-        Collections.addAll(logged_dates, getResources().getStringArray(R.array.dates));
-        Collections.addAll(logged_priorities, getResources().getStringArray(R.array.priorities));
 
         saveListItems();
     }
@@ -86,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
     private void changeListItemVisibility(int position) {
 
         if (deleteMode) {
+            deleteMode = !deleteMode;
+            minusBackgroundTintChange();
             titles.remove(position);
             dates.remove(position);
             priorities.remove(position);
@@ -94,8 +91,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void minusClickListener(View view) {
-        Button minusBtn = (Button) view;
         deleteMode = !deleteMode;
+        minusBackgroundTintChange();
+    }
+
+    public void minusBackgroundTintChange() {
+        Button minusBtn = findViewById(R.id.minusBtn);
         if (deleteMode) minusBtn.setBackgroundTintList(this.getResources().getColorStateList(R.color.red_button));
         else minusBtn.setBackgroundTintList(this.getResources().getColorStateList(R.color.purple_button));
     }
@@ -191,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
         while (sc.hasNext()) {
             String currentWord = sc.next();
             if (currentWord.equals("?")) {
-                titles.add(currentTitle.substring(1);
+                titles.add(currentTitle.substring(1));
                 currentTitle = "";
             }
             else currentTitle += " " + currentWord;
@@ -203,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
         while (sc.hasNext()) {
             String currentWord = sc.next();
             if (currentWord.equals("?")) {
-                titles.add(currentDate.substring(1));
+                dates.add(currentDate.substring(1));
                 currentDate = "";
             }
             else currentDate += " " + currentWord;
@@ -215,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
         while (sc.hasNext()) {
             String currentWord = sc.next();
             if (currentWord.equals("?")) {
-                titles.add(currentPriority.substring(1));
+                priorities.add(currentPriority.substring(1));
                 currentPriority = "";
             }
             else currentPriority += " " + currentWord;
@@ -227,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
         while (sc.hasNext()) {
             String currentWord = sc.next();
             if (currentWord.equals("?")) {
-                titles.add(currentTimestamp.substring(1));
+                timestamps.add(currentTimestamp.substring(1));
                 currentTimestamp = "";
             }
             else currentTimestamp += " " + currentWord;
@@ -239,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
         while (sc.hasNext()) {
             String currentWord = sc.next();
             if (currentWord.equals("?")) {
-                titles.add(currentLoggedTitle.substring(1));
+                logged_titles.add(currentLoggedTitle.substring(1));
                 currentLoggedTitle = "";
             }
             else currentLoggedTitle += " " + currentWord;
@@ -251,7 +252,7 @@ public class MainActivity extends AppCompatActivity {
         while (sc.hasNext()) {
             String currentWord = sc.next();
             if (currentWord.equals("?")) {
-                titles.add(currentLoggedDate.substring(1));
+                logged_dates.add(currentLoggedDate.substring(1));
                 currentLoggedDate = "";
             }
             else currentLoggedDate += " " + currentWord;
@@ -263,7 +264,7 @@ public class MainActivity extends AppCompatActivity {
         while (sc.hasNext()) {
             String currentWord = sc.next();
             if (currentWord.equals("?")) {
-                titles.add(currentLoggedPriority.substring(1));
+                logged_priorities.add(currentLoggedPriority.substring(1));
                 currentLoggedPriority = "";
             }
             else currentLoggedPriority += " " + currentWord;
@@ -319,12 +320,12 @@ public class MainActivity extends AppCompatActivity {
             ListItem currentItem = listItems.get(position);
 
             // Set the views to have the data for the current position
-            TextView itemTitleTxtView = itemView.findViewById(R.id.itemTitleTxtView);
-            TextView itemDateTxtView = itemView.findViewById(R.id.itemDateTxtView);
-            ImageView itemPriorityImgView = itemView.findViewById(R.id.itemPriorityImgView);
+            TextView itemTitleTxtView = itemView.findViewById(R.id.dataLogItemTitleTxtView);
+            TextView itemDateTxtView = itemView.findViewById(R.id.dataLogItemDateTxtView);
+            ImageView itemPriorityImgView = itemView.findViewById(R.id.dataLogItemPriorityImgView);
             itemTitleTxtView.setText(currentItem.getTitle());
             itemDateTxtView.setText(currentItem.getDate());
-            itemPriorityImgView.setImageResource(currentItem.getPriority() == "LOW" ? R.drawable.low_priority : R.drawable.high_priority);
+            itemPriorityImgView.setImageResource(currentItem.getPriority().equals("LOW") ? R.drawable.low_priority : R.drawable.high_priority);
 
             // Return the "filled in" view with
             return itemView;

@@ -7,9 +7,9 @@
     <string name="high_priority">HP</string>
     <string name="low_priority">LP</string>
     <string name="add">ADD</string>
-    <string name="data_log">ADD</string>
     <string name="add_item_msg">Add a note or reminder</string>
     <string name="data_log_msg">Click the button below to view the Data Log</string>
+    <string name="data_log">Data Log</string>
 
 
     <string-array name="titles">

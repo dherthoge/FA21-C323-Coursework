@@ -58,4 +58,8 @@ public class AddItemActivity extends AppCompatActivity {
         setResult(Activity.RESULT_OK,myIntent);
         finish();
     }
+
+    public void dataLogBtnClicked(View view) {
+        startActivity(new Intent(this, DataLogActivity.class));
+    }
 }
