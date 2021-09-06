@@ -6,26 +6,34 @@ import java.util.Calendar;
 
 public class ListItem {
 
-    private String title, date, priority;
+    private String title, date, priority, timestamp;
 
     public ListItem(String title, String date, String priority) {
-        Calendar calendar = Calendar.getInstance();
-
         this.title = title;
-        // dateAndTime is a string of the pattern "DD/MM/YYYY HH:MM _M"
         this.date = date;
         this.priority = priority;
     }
 
+    public ListItem(String title, String date, String priority, String timestamp) {
+        this.title = title;
+        this.date = date;
+        this.priority = priority;
+        this.timestamp = timestamp;
+    }
+
     public String getTitle() {
-        return title;
+        return this.title;
     }
 
     public String getDate() {
-        return date;
+        return this.date;
     }
 
-    public String isPriority() {
-        return priority;
+    public String getPriority() {
+        return this.priority;
+    }
+
+    public String getTimestamp() {
+        return this.timestamp;
     }
 }
