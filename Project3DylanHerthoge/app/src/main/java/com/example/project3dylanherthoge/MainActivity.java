@@ -22,16 +22,19 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ArrayList<String> titles = new ArrayList<String>(),
-            dates = new ArrayList<String>(),
-            priorities = new ArrayList<String>(),
-            timestamps = new ArrayList<String>(),
-            logged_titles = new ArrayList<String>(),
-            logged_dates = new ArrayList<String>(),
-            logged_priorities = new ArrayList<String>();
+    private ArrayList<String> titles = new ArrayList(),
+            dates = new ArrayList(),
+            priorities = new ArrayList(),
+            timestamps = new ArrayList(),
+            logged_titles = new ArrayList(),
+            logged_dates = new ArrayList(),
+            logged_priorities = new ArrayList();
     private ArrayList<ListItem> listItems = new ArrayList();
     private boolean deleteMode = false;
     private ArrayAdapter<ListItem> listViewAdapter;
@@ -47,9 +50,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populateListItems() {
-        SharedPreferences sharedPreferences;
-        SharedPreferences.Editor
+        loadListItems();
 
+        listItems.clear();
         Collections.addAll(titles, getResources().getStringArray(R.array.titles));
         Collections.addAll(dates, getResources().getStringArray(R.array.dates));
         Collections.addAll(priorities, getResources().getStringArray(R.array.priorities));
@@ -60,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
         Collections.addAll(logged_titles, getResources().getStringArray(R.array.titles));
         Collections.addAll(logged_dates, getResources().getStringArray(R.array.dates));
         Collections.addAll(logged_priorities, getResources().getStringArray(R.array.priorities));
+
+        saveListItems();
     }
 
     private void populateListView() {
@@ -74,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < titles.size(); i++)
                 listItems.add(new ListItem(titles.get(i), dates.get(i), priorities.get(i)));
         listViewAdapter.notifyDataSetChanged();
+
+        saveListItems();
     }
 
     private void changeListItemVisibility(int position) {
@@ -105,6 +112,163 @@ public class MainActivity extends AppCompatActivity {
 
     public void plusBtnClicked(View view) {
         startActivityForResult(new Intent(this, AddItemActivity.class), 42);
+    }
+
+    private void saveListItems() {
+        String titlesAggregate = "";
+        if (titles.size() > 0) titlesAggregate = titles.get(0);
+        for (int i = 1; i < titles.size(); i++) {
+            titlesAggregate += " ? " + titles.get(i);
+        }
+        titlesAggregate += " ?";
+
+        String datesAggregate = "";
+        if (dates.size() > 0) datesAggregate = dates.get(0);
+        for (int i = 1; i < dates.size(); i++) {
+            datesAggregate += " ? " + dates.get(i);
+        }
+        datesAggregate += " ?";
+
+        String prioritiesAggregate = "";
+        if (priorities.size() > 0) prioritiesAggregate = priorities.get(0);
+        for (int i = 1; i < priorities.size(); i++) {
+            prioritiesAggregate += " ? " + priorities.get(i);
+        }
+        prioritiesAggregate += " ?";
+
+        String timestampsAggregate = "";
+        if (timestamps.size() > 0) timestampsAggregate = timestamps.get(0);
+        for (int i = 1; i < timestamps.size(); i++) {
+            timestampsAggregate += " ? " + timestamps.get(i);
+        }
+        timestampsAggregate += " ?";
+
+        String loggedTitlesAggregate = "";
+        if (logged_titles.size() > 0) loggedTitlesAggregate = logged_titles.get(0);
+        for (int i = 1; i < logged_titles.size(); i++) {
+            loggedTitlesAggregate += " ? " + logged_titles.get(i);
+        }
+        loggedTitlesAggregate += " ?";
+
+        String loggedDatesAggregate = "";
+        if (logged_dates.size() > 0) loggedDatesAggregate = logged_dates.get(0);
+        for (int i = 1; i < logged_dates.size(); i++) {
+            loggedDatesAggregate += " ? " + logged_dates.get(i);
+        }
+        loggedDatesAggregate += " ?";
+
+        String loggedPrioritiesAggregate = "";
+        if (logged_priorities.size() > 0) loggedPrioritiesAggregate = logged_priorities.get(0);
+        for (int i = 1; i < logged_priorities.size(); i++) {
+            loggedPrioritiesAggregate += " ? " + logged_priorities.get(i);
+        }
+        loggedPrioritiesAggregate += " ?";
+
+        SharedPreferences sp = getSharedPreferences("data", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("TITLES", titlesAggregate);
+        editor.putString("DATES", datesAggregate);
+        editor.putString("PRIORITIES", prioritiesAggregate);
+        editor.putString("TIMESTAMPS", timestampsAggregate);
+        editor.putString("LOGGEDTITLES", loggedTitlesAggregate);
+        editor.putString("LOGGEDDATES", loggedDatesAggregate);
+        editor.putString("LOGGEDPRIORITIES", loggedPrioritiesAggregate);
+        editor.commit();
+    }
+
+    private void loadListItems() {
+        SharedPreferences sp = getSharedPreferences("data", MODE_PRIVATE);
+        String titlesAggregate = sp.getString("TITLES", "");
+        String datesAggregate = sp.getString("DATES", "");
+        String prioritiesAggregate = sp.getString("PRIORITIES", "");
+        String timestampsAggregate = sp.getString("TIMESTAMPS", "");
+        String loggedTitlesAggregate = sp.getString("LOGGEDTITLES", "");
+        String loggedDatesAggregate = sp.getString("LOGGEDDATES", "");
+        String loggedPrioritiesAggregate = sp.getString("LOGGEDPRIORITIES", "");
+
+        Scanner sc = new Scanner(titlesAggregate);
+        String currentTitle = "";
+        while (sc.hasNext()) {
+            String currentWord = sc.next();
+            if (currentWord.equals("?")) {
+                titles.add(currentTitle.substring(1);
+                currentTitle = "";
+            }
+            else currentTitle += " " + currentWord;
+        }
+        sc.close();
+
+        sc = new Scanner(datesAggregate);
+        String currentDate = "";
+        while (sc.hasNext()) {
+            String currentWord = sc.next();
+            if (currentWord.equals("?")) {
+                titles.add(currentDate.substring(1));
+                currentDate = "";
+            }
+            else currentDate += " " + currentWord;
+        }
+        sc.close();
+
+        sc = new Scanner(prioritiesAggregate);
+        String currentPriority = "";
+        while (sc.hasNext()) {
+            String currentWord = sc.next();
+            if (currentWord.equals("?")) {
+                titles.add(currentPriority.substring(1));
+                currentPriority = "";
+            }
+            else currentPriority += " " + currentWord;
+        }
+        sc.close();
+
+        sc = new Scanner(timestampsAggregate);
+        String currentTimestamp = "";
+        while (sc.hasNext()) {
+            String currentWord = sc.next();
+            if (currentWord.equals("?")) {
+                titles.add(currentTimestamp.substring(1));
+                currentTimestamp = "";
+            }
+            else currentTimestamp += " " + currentWord;
+        }
+        sc.close();
+
+        sc = new Scanner(loggedTitlesAggregate);
+        String currentLoggedTitle = "";
+        while (sc.hasNext()) {
+            String currentWord = sc.next();
+            if (currentWord.equals("?")) {
+                titles.add(currentLoggedTitle.substring(1));
+                currentLoggedTitle = "";
+            }
+            else currentLoggedTitle += " " + currentWord;
+        }
+        sc.close();
+
+        sc = new Scanner(loggedDatesAggregate);
+        String currentLoggedDate = "";
+        while (sc.hasNext()) {
+            String currentWord = sc.next();
+            if (currentWord.equals("?")) {
+                titles.add(currentLoggedDate.substring(1));
+                currentLoggedDate = "";
+            }
+            else currentLoggedDate += " " + currentWord;
+        }
+        sc.close();
+
+        sc = new Scanner(loggedPrioritiesAggregate);
+        String currentLoggedPriority = "";
+        while (sc.hasNext()) {
+            String currentWord = sc.next();
+            if (currentWord.equals("?")) {
+                titles.add(currentLoggedPriority.substring(1));
+                currentLoggedPriority = "";
+            }
+            else currentLoggedPriority += " " + currentWord;
+        }
+        sc.close();
     }
 
     @Override
