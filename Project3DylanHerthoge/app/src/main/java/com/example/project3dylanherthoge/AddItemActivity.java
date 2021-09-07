@@ -10,6 +10,9 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * An Activity to create new Items.
+ */
 public class AddItemActivity extends AppCompatActivity {
 
     @Override
@@ -20,16 +23,27 @@ public class AddItemActivity extends AppCompatActivity {
         registerCheckBoxClicks();
     }
 
+    /**
+     * Sets click listeners for both checkboxes.
+     */
     private void registerCheckBoxClicks() {
         findViewById(R.id.lowPriorityChkBox).setOnClickListener(this::checkBoxClicked);
         findViewById(R.id.highPriorityChkBox).setOnClickListener(this::checkBoxClicked);
     }
 
+    /**
+     * Prevents both checkboxes from being checked at the same time.
+     * @param v The clicked View
+     */
     public void checkBoxClicked(View v) {
         if (v.getId() == R.id.lowPriorityChkBox) ((CheckBox) findViewById(R.id.highPriorityChkBox)).setChecked(false);
         else ((CheckBox) findViewById(R.id.lowPriorityChkBox)).setChecked(false);
     }
 
+    /**
+     * Finishes the current Activity and appends item information to the return Intent.
+     * @param view The clicked View
+     */
     public void addBtnClicked(View view) {
 
         EditText titleEdtTxt = findViewById(R.id.titleEdtTxt);
@@ -59,6 +73,10 @@ public class AddItemActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * Switches to DataLogActivity.
+     * @param view The clicked View
+     */
     public void dataLogBtnClicked(View view) {
         startActivity(new Intent(this, DataLogActivity.class));
     }

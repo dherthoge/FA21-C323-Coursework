@@ -21,6 +21,7 @@ import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
 
+    
     private ArrayList<String> titles = new ArrayList<String>(),
             dates = new ArrayList<String>(),
             priorities = new ArrayList<String>();

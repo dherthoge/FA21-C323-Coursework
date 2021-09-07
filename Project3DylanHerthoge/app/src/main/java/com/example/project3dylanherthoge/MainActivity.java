@@ -16,12 +16,14 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
 
+/**
+ * The main activity of the application.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private ArrayList<String> titles = new ArrayList(),
@@ -31,153 +33,25 @@ public class MainActivity extends AppCompatActivity {
             logged_titles = new ArrayList(),
             logged_dates = new ArrayList(),
             logged_priorities = new ArrayList();
-    private ArrayList<ListItem> listItems = new ArrayList();
-    private ArrayAdapter<ListItem> listViewAdapter;
-    private boolean deleteMode = false;
+    private ArrayList<Item> itemList = new ArrayList();
+    private ArrayAdapter<Item> listViewAdapter;
+    private boolean deleteMode = false; // Whether or not the next item the user clicks will be removed from the list
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        populateListItems();
+        populateItemList();
         populateListView();
         registerListViewClicks();
     }
 
-    private void populateListItems() {
-        loadListItems();
-
-//        Collections.addAll(titles, getResources().getStringArray(R.array.titles));
-//        Collections.addAll(dates, getResources().getStringArray(R.array.dates));
-//        Collections.addAll(priorities, getResources().getStringArray(R.array.priorities));
-//        Collections.addAll(timestamps, getResources().getStringArray(R.array.timestamps));
-//        Collections.addAll(logged_titles, getResources().getStringArray(R.array.titles));
-//        Collections.addAll(logged_dates, getResources().getStringArray(R.array.dates));
-//        Collections.addAll(logged_priorities, getResources().getStringArray(R.array.priorities));
-        for (int i = 0; i < titles.size(); i++)
-                listItems.add(new ListItem(titles.get(i), dates.get(i), priorities.get(i)));
-
-
-        saveListItems();
-    }
-
-    private void populateListView() {
-        listViewAdapter = new ListViewAdapter();
-        ListView listView = findViewById(R.id.itemLstView);
-        listView.setAdapter(listViewAdapter);
-    }
-
-    private void repopulateListItems() {
-
-        listItems.clear();
-        for (int i = 0; i < titles.size(); i++)
-                listItems.add(new ListItem(titles.get(i), dates.get(i), priorities.get(i)));
-        listViewAdapter.notifyDataSetChanged();
-
-        saveListItems();
-    }
-
-    private void changeListItemVisibility(int position) {
-
-        if (deleteMode) {
-            deleteMode = !deleteMode;
-            minusBackgroundTintChange();
-            titles.remove(position);
-            dates.remove(position);
-            priorities.remove(position);
-            repopulateListItems();
-        }
-    }
-
-    public void minusClickListener(View view) {
-        deleteMode = !deleteMode;
-        minusBackgroundTintChange();
-    }
-
-    public void minusBackgroundTintChange() {
-        Button minusBtn = findViewById(R.id.minusBtn);
-        if (deleteMode) minusBtn.setBackgroundTintList(this.getResources().getColorStateList(R.color.red_button));
-        else minusBtn.setBackgroundTintList(this.getResources().getColorStateList(R.color.purple_button));
-    }
-
-    private void registerListViewClicks() {
-        ListView listView = findViewById(R.id.itemLstView);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                changeListItemVisibility(position);
-            }
-        });
-    }
-
-    public void plusBtnClicked(View view) {
-        startActivityForResult(new Intent(this, AddItemActivity.class), 42);
-    }
-
-    private void saveListItems() {
-        String titlesAggregate = "";
-        if (titles.size() > 0) titlesAggregate = titles.get(0);
-        for (int i = 1; i < titles.size(); i++) {
-            titlesAggregate += " ? " + titles.get(i);
-        }
-        titlesAggregate += " ?";
-
-        String datesAggregate = "";
-        if (dates.size() > 0) datesAggregate = dates.get(0);
-        for (int i = 1; i < dates.size(); i++) {
-            datesAggregate += " ? " + dates.get(i);
-        }
-        datesAggregate += " ?";
-
-        String prioritiesAggregate = "";
-        if (priorities.size() > 0) prioritiesAggregate = priorities.get(0);
-        for (int i = 1; i < priorities.size(); i++) {
-            prioritiesAggregate += " ? " + priorities.get(i);
-        }
-        prioritiesAggregate += " ?";
-
-        String timestampsAggregate = "";
-        if (timestamps.size() > 0) timestampsAggregate = timestamps.get(0);
-        for (int i = 1; i < timestamps.size(); i++) {
-            timestampsAggregate += " ? " + timestamps.get(i);
-        }
-        timestampsAggregate += " ?";
-
-        String loggedTitlesAggregate = "";
-        if (logged_titles.size() > 0) loggedTitlesAggregate = logged_titles.get(0);
-        for (int i = 1; i < logged_titles.size(); i++) {
-            loggedTitlesAggregate += " ? " + logged_titles.get(i);
-        }
-        loggedTitlesAggregate += " ?";
-
-        String loggedDatesAggregate = "";
-        if (logged_dates.size() > 0) loggedDatesAggregate = logged_dates.get(0);
-        for (int i = 1; i < logged_dates.size(); i++) {
-            loggedDatesAggregate += " ? " + logged_dates.get(i);
-        }
-        loggedDatesAggregate += " ?";
-
-        String loggedPrioritiesAggregate = "";
-        if (logged_priorities.size() > 0) loggedPrioritiesAggregate = logged_priorities.get(0);
-        for (int i = 1; i < logged_priorities.size(); i++) {
-            loggedPrioritiesAggregate += " ? " + logged_priorities.get(i);
-        }
-        loggedPrioritiesAggregate += " ?";
-
-        SharedPreferences sp = getSharedPreferences("data", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString("TITLES", titlesAggregate);
-        editor.putString("DATES", datesAggregate);
-        editor.putString("PRIORITIES", prioritiesAggregate);
-        editor.putString("TIMESTAMPS", timestampsAggregate);
-        editor.putString("LOGGEDTITLES", loggedTitlesAggregate);
-        editor.putString("LOGGEDDATES", loggedDatesAggregate);
-        editor.putString("LOGGEDPRIORITIES", loggedPrioritiesAggregate);
-        editor.commit();
-    }
-
-    private void loadListItems() {
+    /**
+     * Loads titles, dates, priorities, timestamps, logged_titles, logged_dates, and
+     * logged-priorities from SharedPreferences and adds them to their respective ArrayList.
+     */
+    private void loadItemList() {
         SharedPreferences sp = getSharedPreferences("data", MODE_PRIVATE);
         String titlesAggregate = sp.getString("TITLES", "");
         String datesAggregate = sp.getString("DATES", "");
@@ -272,12 +146,181 @@ public class MainActivity extends AppCompatActivity {
         sc.close();
     }
 
+    /**
+     * Saves titles, dates, priorities, timestamps, logged_titles, logged_dates, and
+     * logged-priorities to SharedPreferences.
+     */
+    private void saveItemList() {
+        String titlesAggregate = "";
+        if (titles.size() > 0) titlesAggregate = titles.get(0);
+        for (int i = 1; i < titles.size(); i++) {
+            titlesAggregate += " ? " + titles.get(i);
+        }
+        titlesAggregate += " ?";
+
+        String datesAggregate = "";
+        if (dates.size() > 0) datesAggregate = dates.get(0);
+        for (int i = 1; i < dates.size(); i++) {
+            datesAggregate += " ? " + dates.get(i);
+        }
+        datesAggregate += " ?";
+
+        String prioritiesAggregate = "";
+        if (priorities.size() > 0) prioritiesAggregate = priorities.get(0);
+        for (int i = 1; i < priorities.size(); i++) {
+            prioritiesAggregate += " ? " + priorities.get(i);
+        }
+        prioritiesAggregate += " ?";
+
+        String timestampsAggregate = "";
+        if (timestamps.size() > 0) timestampsAggregate = timestamps.get(0);
+        for (int i = 1; i < timestamps.size(); i++) {
+            timestampsAggregate += " ? " + timestamps.get(i);
+        }
+        timestampsAggregate += " ?";
+
+        String loggedTitlesAggregate = "";
+        if (logged_titles.size() > 0) loggedTitlesAggregate = logged_titles.get(0);
+        for (int i = 1; i < logged_titles.size(); i++) {
+            loggedTitlesAggregate += " ? " + logged_titles.get(i);
+        }
+        loggedTitlesAggregate += " ?";
+
+        String loggedDatesAggregate = "";
+        if (logged_dates.size() > 0) loggedDatesAggregate = logged_dates.get(0);
+        for (int i = 1; i < logged_dates.size(); i++) {
+            loggedDatesAggregate += " ? " + logged_dates.get(i);
+        }
+        loggedDatesAggregate += " ?";
+
+        String loggedPrioritiesAggregate = "";
+        if (logged_priorities.size() > 0) loggedPrioritiesAggregate = logged_priorities.get(0);
+        for (int i = 1; i < logged_priorities.size(); i++) {
+            loggedPrioritiesAggregate += " ? " + logged_priorities.get(i);
+        }
+        loggedPrioritiesAggregate += " ?";
+
+        SharedPreferences sp = getSharedPreferences("data", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("TITLES", titlesAggregate);
+        editor.putString("DATES", datesAggregate);
+        editor.putString("PRIORITIES", prioritiesAggregate);
+        editor.putString("TIMESTAMPS", timestampsAggregate);
+        editor.putString("LOGGEDTITLES", loggedTitlesAggregate);
+        editor.putString("LOGGEDDATES", loggedDatesAggregate);
+        editor.putString("LOGGEDPRIORITIES", loggedPrioritiesAggregate);
+        editor.commit();
+    }
+
+    /**
+     * Adds the items saved in SharedPreferences to itemList.
+     */
+    private void populateItemList() {
+        loadItemList();
+
+        /* Uncomment to add premade items to the list *NOTE*: the items are added to the list every
+         * time the program is ran.
+         */
+//        Collections.addAll(titles, getResources().getStringArray(R.array.titles));
+//        Collections.addAll(dates, getResources().getStringArray(R.array.dates));
+//        Collections.addAll(priorities, getResources().getStringArray(R.array.priorities));
+//        Collections.addAll(timestamps, getResources().getStringArray(R.array.timestamps));
+//        Collections.addAll(logged_titles, getResources().getStringArray(R.array.titles));
+//        Collections.addAll(logged_dates, getResources().getStringArray(R.array.dates));
+//        Collections.addAll(logged_priorities, getResources().getStringArray(R.array.priorities));
+        for (int i = 0; i < titles.size(); i++)
+                itemList.add(new Item(titles.get(i), dates.get(i), priorities.get(i)));
+
+        saveItemList();
+    }
+
+    /**
+     * Binds the ListViewAdapter to the itemListView in activity_main.xml.
+     */
+    private void populateListView() {
+        listViewAdapter = new ListViewAdapter();
+        ListView listView = findViewById(R.id.itemLstView);
+        listView.setAdapter(listViewAdapter);
+    }
+
+    /**
+     * Repopulates itemList with current Items.
+     */
+    private void repopulateItemList() {
+        itemList.clear();
+        for (int i = 0; i < titles.size(); i++)
+                itemList.add(new Item(titles.get(i), dates.get(i), priorities.get(i)));
+        listViewAdapter.notifyDataSetChanged();
+
+        saveItemList();
+    }
+
+    /**
+     * Removes an item from listItem.
+     * @param position The position of the item.
+     */
+    private void changeListItemVisibility(int position) {
+
+        if (deleteMode) {
+            deleteMode = !deleteMode;
+            minusBackgroundTintChange();
+            titles.remove(position);
+            dates.remove(position);
+            priorities.remove(position);
+            repopulateItemList();
+        }
+    }
+
+    /**
+     * Enables item deletion and changes the color of the minus button.
+     * @param view The clicked View
+     */
+    public void minusClickListener(View view) {
+        deleteMode = !deleteMode;
+        minusBackgroundTintChange();
+    }
+
+    /**
+     * Changes the background tint of the minus button.
+     */
+    public void minusBackgroundTintChange() {
+        Button minusBtn = findViewById(R.id.minusBtn);
+        if (deleteMode) minusBtn.setBackgroundTintList(this.getResources().getColorStateList(R.color.red_button));
+        else minusBtn.setBackgroundTintList(this.getResources().getColorStateList(R.color.purple_button));
+    }
+
+    /**
+     * Binds a click listener to each of the items in itemList.
+     */
+    private void registerListViewClicks() {
+        ListView listView = findViewById(R.id.itemLstView);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                changeListItemVisibility(position);
+            }
+        });
+    }
+
+    /**
+     * Switches to AddItemActivity.
+     * @param view The clicked View
+     */
+    public void plusBtnClicked(View view) {
+        startActivityForResult(new Intent(this, AddItemActivity.class), 42);
+    }
+
+    /**
+     * Possibly adds a new item to itemList and logs it's contents/timestamp.
+     * @param requestCode Identifies the returned result
+     * @param resultCode Identifies if a result was returned
+     * @param data The result
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == Activity.RESULT_CANCELED) {
-            Toast.makeText(this, "Error: Result Cancelled", Toast.LENGTH_SHORT);
             return;
         }
         switch (requestCode){
@@ -285,7 +328,7 @@ public class MainActivity extends AppCompatActivity {
                 titles.add(data.getStringExtra("TITLE"));
                 dates.add(data.getStringExtra("DATE"));
                 priorities.add(data.getStringExtra("PRIORITY"));
-                repopulateListItems();
+                repopulateItemList();
 
                 logged_titles.add(data.getStringExtra("TITLE"));
                 logged_dates.add(data.getStringExtra("DATE"));
@@ -300,10 +343,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private class ListViewAdapter extends ArrayAdapter<ListItem> {
+    /**
+     * Converts stored Item information to a hierarchy of views.
+     */
+    private class ListViewAdapter extends ArrayAdapter<Item> {
+
 
         public ListViewAdapter() {
-            super(MainActivity.this, R.layout.item_layout, listItems);
+            super(MainActivity.this, R.layout.item_layout, itemList);
         }
 
         @NonNull
@@ -317,7 +364,7 @@ public class MainActivity extends AppCompatActivity {
                 itemView = getLayoutInflater().inflate(R.layout.item_layout, parent, false);
 
             // Get the data to "fill in" the view
-            ListItem currentItem = listItems.get(position);
+            Item currentItem = itemList.get(position);
 
             // Set the views to have the data for the current position
             TextView itemTitleTxtView = itemView.findViewById(R.id.dataLogItemTitleTxtView);

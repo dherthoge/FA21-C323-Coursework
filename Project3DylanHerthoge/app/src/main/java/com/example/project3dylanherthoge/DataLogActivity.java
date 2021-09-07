@@ -16,14 +16,17 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * An Activity to display the log of items.
+ */
 public class DataLogActivity extends AppCompatActivity {
 
     private ArrayList<String> timestamps = new ArrayList(),
             logged_titles = new ArrayList(),
             logged_dates = new ArrayList(),
             logged_priorities = new ArrayList();
-    private ArrayList<ListItem> listItems = new ArrayList();
-    private ArrayAdapter<ListItem> listViewAdapter;
+private ArrayList<Item> itemList = new ArrayList();
+    private ArrayAdapter<Item> listViewAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,18 +37,28 @@ public class DataLogActivity extends AppCompatActivity {
         populateListView();
     }
 
+    /**
+     * Adds the items saved in SharedPreferences to itemList.
+     */
     private void populateListItems() {
         loadListItems();
         for (int i = 0; i < logged_titles.size(); i++)
-            listItems.add(new ListItem(logged_titles.get(i), logged_dates.get(i), logged_priorities.get(i), timestamps.get(i)));
+            itemList.add(new Item(logged_titles.get(i), logged_dates.get(i), logged_priorities.get(i), timestamps.get(i)));
     }
 
+    /**
+     * Binds the ListViewAdapter to the itemListView in activity_data_log.xml.
+     */
     private void populateListView() {
         listViewAdapter = new DataLogActivity.ListViewAdapter();
         ListView listView = findViewById(R.id.dataLogListView);
         listView.setAdapter(listViewAdapter);
     }
 
+    /**
+     * Loads timestamps, logged_titles, logged_dates, and logged-priorities from SharedPreferences
+     * and adds them to their respective ArrayList.
+     */
     private void loadListItems() {
         SharedPreferences sp = getSharedPreferences("data", MODE_PRIVATE);
         String loggedTitlesAggregate = sp.getString("LOGGEDTITLES", "");
@@ -102,10 +115,13 @@ public class DataLogActivity extends AppCompatActivity {
         sc.close();
     }
 
-    private class ListViewAdapter extends ArrayAdapter<ListItem> {
+    /**
+     * Converts stored Item information to a hierarchy of views.
+     */
+    private class ListViewAdapter extends ArrayAdapter<Item> {
 
         public ListViewAdapter() {
-            super(DataLogActivity.this, R.layout.data_log_item_layout, listItems);
+            super(DataLogActivity.this, R.layout.data_log_item_layout, itemList);
         }
 
         @NonNull
@@ -119,7 +135,7 @@ public class DataLogActivity extends AppCompatActivity {
                 itemView = getLayoutInflater().inflate(R.layout.data_log_item_layout, parent, false);
 
             // Get the data to "fill in" the view
-            ListItem currentItem = listItems.get(position);
+            Item currentItem = itemList.get(position);
 
             // Set the views to have the data for the current position
             TextView dataLogItemTitleTxtView = itemView.findViewById(R.id.dataLogItemTitleTxtView);
