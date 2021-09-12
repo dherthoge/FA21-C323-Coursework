@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PersonalInformationFragment">
+
+    <ImageView
+        android:id="@+id/image_user_picture"
+        android:layout_width="103dp"
+        android:layout_height="92dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/dylan_with_banana"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_user_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="@string/current_location"
+        android:textColor="@android:color/darker_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/image_user_picture" />
+
+    <EditText
+        android:id="@+id/edit_user_location"
+        android:layout_width="157dp"
+        android:layout_height="39dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="@string/user_name"
+
+        app:layout_constraintBottom_toTopOf="@+id/text_user_name"
+        app:layout_constraintStart_toEndOf="@+id/image_user_picture" />
+
+    <ImageButton
+        android:id="@+id/button_edit"
+        android:layout_width="61dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="1dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/circle_green_checkmark"
+        app:layout_constraintBottom_toTopOf="@+id/text_user_name"
+        app:layout_constraintStart_toEndOf="@+id/edit_user_location" />
+
+    <ImageButton
+        android:id="@+id/button_confirm"
+        android:layout_width="64dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="1dp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/circle_light_blue_checkmark"
+        app:layout_constraintBottom_toTopOf="@+id/text_user_name"
+        app:layout_constraintStart_toEndOf="@+id/button_edit" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
