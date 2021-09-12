@@ -3,7 +3,7 @@
     <string name="internet">Internet</string>
     <string name="battery">Battery</string>
     <string name="storage">Storage</string>
-    <string name="internet_msg">Cellular: LTE   Wifi: eduroam</string>
+    <string name="internet_msg">Cellular: LTE\nWifi: eduroam</string>
     <string name="battery_msg">Battery: 96%</string>
     <string name="storage_msg">Storage: 42% full</string>
     <string name="current_location">Bloomington, IN</string>

@@ -7,9 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -18,10 +16,11 @@ public class PersonalInformationFragment extends Fragment {
 
     EditText editUserName;
     View view;
+    personalInformationFragmentInterface activityCommunicator;
+
 
     public interface personalInformationFragmentInterface {
     }
-    personalInformationFragmentInterface activityCommunicator;
 
     public PersonalInformationFragment() {
         // Required empty public constructor

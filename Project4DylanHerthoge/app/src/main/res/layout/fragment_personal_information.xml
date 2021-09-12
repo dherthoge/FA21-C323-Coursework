@@ -42,8 +42,8 @@
 
     <ImageButton
         android:id="@+id/button_edit"
-        android:layout_width="61dp"
-        android:layout_height="48dp"
+        android:layout_width="48dp"
+        android:layout_height="51dp"
         android:layout_marginStart="1dp"
         android:background="@android:color/transparent"
         android:src="@drawable/circle_green_checkmark"
@@ -52,9 +52,9 @@
 
     <ImageButton
         android:id="@+id/button_confirm"
-        android:layout_width="64dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="1dp"
+        android:layout_width="48dp"
+        android:layout_height="51dp"
+        android:layout_marginStart="8dp"
         android:background="@android:color/transparent"
         android:src="@drawable/circle_grey_checkmark"
         app:layout_constraintBottom_toTopOf="@+id/text_user_name"
