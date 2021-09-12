@@ -56,7 +56,7 @@
         android:layout_height="48dp"
         android:layout_marginStart="1dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/circle_light_blue_checkmark"
+        android:src="@drawable/circle_grey_checkmark"
         app:layout_constraintBottom_toTopOf="@+id/text_user_name"
         app:layout_constraintStart_toEndOf="@+id/button_edit" />
 
