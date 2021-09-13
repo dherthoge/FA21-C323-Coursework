@@ -76,7 +76,10 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
                 else if (settingMsg == batteryMsg) settingMsg = storageMsg;
                 else if (settingMsg == storageMsg) settingMsg = internetMsg;
 
-                replaceSettingsFragment("settingMsg");
+                String setting = "INTERNET";
+                if (settingMsg == batteryMsg) setting = "BATTERY";
+                else if (settingMsg == storageMsg) setting = "STORAGE";
+                replaceSettingsFragment(setting);
                 break;
         }
         textSettingMsg.setText(settingMsg);
