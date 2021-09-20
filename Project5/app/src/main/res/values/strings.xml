@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Project5</string>
+    <string name="title">Sensor Playground</string>
+    <string name="gesture_playground">Gesture Playground</string>
+</resources>

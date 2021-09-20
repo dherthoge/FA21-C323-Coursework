@@ -17,6 +17,8 @@ import android.widget.ImageButton;
  */
 public class PersonalInformationFragment extends Fragment implements View.OnClickListener {
 
+
+    // References of Views in SettingsFragment
     View view;
     EditText editUserName;
     ImageButton buttonEdit;
@@ -24,22 +26,33 @@ public class PersonalInformationFragment extends Fragment implements View.OnClic
     Drawable greyCheck;
     Drawable greenCheck;
     Drawable blueCheck;
+
+    // Whether or not the user is editing their name
     boolean editing = false;
 
-    public interface personalInformationFragmentInterface {
-    }
-    personalInformationFragmentInterface activityCommunicator;
-
+    /**
+     * Creates a PersonalInformationFragment object.
+     */
     public PersonalInformationFragment() {
         // Required empty public constructor
     }
 
+    /**
+     *
+     * @param savedInstanceState The state of a previous instance
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
+    /**
+     * Generates a View representing the fragment.
+     * @param inflater A LayoutInflater object
+     * @param container The container for the current fragment.
+     * @param savedInstanceState The state of a previous instance
+     * @return a View representing a PersonalInformationFragment
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -58,33 +71,31 @@ public class PersonalInformationFragment extends Fragment implements View.OnClic
         return view;
     }
 
+    /**
+     * Changes the active button and enables/disables editing.
+     * @param view The clicked button
+     */
     @Override
-    public void onClick(View view) {
+    public void onClick(View view) /**/{
         switch (view.getId()) {
             case R.id.button_edit:
-                setActiveButton("edit");
-                break;
-            case R.id.button_confirm:
-                setActiveButton("confirm");
-                break;
-        }
-    }
-
-    public void setActiveButton(String button) {
-
-        switch (button) {
-            case "edit":
                 if (!editing) {
+                    // Sets button colors
                     buttonEdit.setImageDrawable(greyCheck);
                     buttonConfirm.setImageDrawable(greenCheck);
+
+                    // Enables editing
                     editUserName.setFocusableInTouchMode(true);
                     editing = !editing;
                 }
                 break;
-            case "confirm":
+            case R.id.button_confirm:
                 if (editing) {
+                    // Sets button colors
                     buttonEdit.setImageDrawable(blueCheck);
                     buttonConfirm.setImageDrawable(greyCheck);
+
+                    // Disables editing
                     editUserName.setFocusable(false);
                     editing = !editing;
                 }
