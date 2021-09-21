@@ -15,10 +15,6 @@ public class LogFragment extends Fragment {
     TextView textLog;
     String log = "";
 
-    public LogFragment() {
-
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

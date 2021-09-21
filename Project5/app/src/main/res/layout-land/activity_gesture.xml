@@ -6,6 +6,15 @@
     android:layout_height="match_parent"
     tools:context=".GestureActivity">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linear_layout_ball_fragment"
+        android:layout_width="355dp"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"></androidx.constraintlayout.widget.ConstraintLayout>
+
     <LinearLayout
         android:id="@+id/linear_layout_log_fragment"
         android:layout_width="365dp"
@@ -15,12 +24,4 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"></LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/linear_layout_ball_fragment"
-        android:layout_width="365dp"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"></LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

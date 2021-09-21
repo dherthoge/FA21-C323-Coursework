@@ -1,14 +1,19 @@
 package com.example.project5;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
 import android.content.res.Configuration;
+import android.graphics.Matrix;
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
+import android.view.View;
 import android.widget.TextView;
 
 public class GestureActivity extends AppCompatActivity implements
@@ -17,6 +22,7 @@ public class GestureActivity extends AppCompatActivity implements
     GestureDetector gestureDetector;
     ScaleGestureDetector scaleGestureDetector;
     LogFragment logFragment;
+    BallFragment ballFragment;
     String log = "";
 
 
@@ -26,15 +32,40 @@ public class GestureActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_gesture);
 
 
-        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        logFragment = new LogFragment();
-        fragmentTransaction.replace(R.id.linear_layout_log_fragment, logFragment);
-        fragmentTransaction.commit();
+        setLogFragment();
+        setBallFragment();
 
 
         gestureDetector = new GestureDetector(this, this);
         gestureDetector.setOnDoubleTapListener(this);
 //        scaleGestureDetector = new ScaleGestureDetector(this, new MyOwnScaleGestureDetector());
+
+
+    }
+
+    /**
+     * Replaces the currently attached SettingsFragment with an identical one, but sends the
+     * currently selected setting.
+     * @param setting The currently active Setting
+     */
+    private void setLogFragment() {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        logFragment = new LogFragment();
+        fragmentTransaction.replace(R.id.linear_layout_log_fragment, logFragment);
+        fragmentTransaction.commit();
+    }
+
+    /**
+     * Replaces the currently attached SettingsFragment with an identical one, but sends the
+     * currently selected setting.
+     * @param setting The currently active Setting
+     */
+    private void setBallFragment() {
+
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        ballFragment = new BallFragment();
+        fragmentTransaction.replace(R.id.linear_layout_ball_fragment, ballFragment);
+        fragmentTransaction.commit();
     }
 
     /**
