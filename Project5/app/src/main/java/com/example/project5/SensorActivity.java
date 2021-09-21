@@ -2,10 +2,12 @@ package com.example.project5;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
@@ -23,22 +25,36 @@ import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements SensorEventListener, GestureDetector.OnGestureListener {
+public class SensorActivity extends AppCompatActivity implements SensorEventListener, GestureDetector.OnGestureListener {
 
     private TextView textCity, textState, textLight, textAmbientTemp;
     private Button btnGesturePlay;
+    private float xMin, xMax, yMin, yMax;
     private SensorManager sensorManager;
     private LocationManager locationManager;
     private Sensor lightSensor, ambientTempSensor;
     private LocationListener locationListener;
     private Geocoder geocoder;
-    private int startTouchX, startTouchY;
     GestureDetector gestureDetector;
+
+    public static class TransparentConstraintLayout extends ConstraintLayout {
+
+        public TransparentConstraintLayout(Context context) {
+            super(context);
+        }
+
+        @Override
+        public boolean onInterceptTouchEvent(MotionEvent ev) {
+//            super.onInterceptTouchEvent(ev);
+            return false;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +68,25 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         textAmbientTemp = findViewById(R.id.textAmbientTemp);
         btnGesturePlay = findViewById(R.id.btnGesturePlay);
         geocoder = new Geocoder(this);
+
+
+        // Some of this instruction was taken from https://stackoverflow.com/a/55308560
+        btnGesturePlay.post(new Runnable() {
+            @Override
+            public void run() {
+
+                int[] location = new int[2];
+                btnGesturePlay.getLocationOnScreen(location);
+
+                xMin = location[0];
+                xMax = xMin + btnGesturePlay.getWidth();
+                yMin = location[1];
+                yMax = yMin + btnGesturePlay.getHeight();
+
+                Log.i("dimensions", xMin + " " + xMax + " " + yMin + " " + yMax);
+            }
+        });
+        btnGesturePlay.setEnabled(false);
 
 
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
@@ -83,9 +118,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.INTERNET}, 13);
+            requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.INTERNET}, 42);
             return;
-        } else {
+        }
+        else {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 50, 0, locationListener);
         }
 
@@ -93,16 +129,27 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         gestureDetector = new GestureDetector(this, this);
     }
 
-    private void launchGesturePlayground() {
+    @Override
+    protected void onResume() {
+        sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, ambientTempSensor, SensorManager.SENSOR_DELAY_NORMAL);
 
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        sensorManager.unregisterListener(this);
+
+        super.onPause();
     }
 
     @SuppressLint({"MissingSuperCall", "MissingPermission"})
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode){
-            case 13:
-                if(grantResults.length>0 && grantResults[0]==PackageManager.PERMISSION_GRANTED)
+            case 42:
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
                     locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0, locationListener);
                 else {
                     textCity.setText("Location permission not granted!");
@@ -127,14 +174,25 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (gestureDetector != null) {
+            gestureDetector.onTouchEvent(event);
+        }
+        return super.onTouchEvent(event);
+    }
+
+    @Override
     public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-        Log.i("In onFling", "FLUNG startX" + motionEvent.getX() + "   startY" + motionEvent.getX());
+
+        startActivity(new Intent(this, GestureActivity.class));
+        Log.i("onFling", "button flung");
         return false;
     }
 
 
 
 
+    // Unused imports
     @Override
     public boolean onDown(MotionEvent motionEvent) {
         return false;

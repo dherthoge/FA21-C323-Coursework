@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Dylan/Documents/C323-Android-Studio-Projects/Project5/app/src/main/res/layout-land/activity_gesture.xml" value="0.33" />
+        <entry key="..\:/Users/Dylan/Documents/C323-Android-Studio-Projects/Project5/app/src/main/res/layout/activity_gesture.xml" value="0.33" />
+        <entry key="..\:/Users/Dylan/Documents/C323-Android-Studio-Projects/Project5/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Dylan/Documents/C323-Android-Studio-Projects/Project5/app/src/main/res/layout/fragment_log.xml" value="0.33" />
         <entry key="..\:/Users/dylan/Desktop/C323/C323-Android-Studio-Projects/Project5/app/src/main/res/layout/activity_main.xml" value="0.264" />
       </map>
     </option>
