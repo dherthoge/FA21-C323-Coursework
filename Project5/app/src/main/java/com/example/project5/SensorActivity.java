@@ -43,25 +43,26 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
     private Geocoder geocoder;
     GestureDetector gestureDetector;
 
-    public static class TransparentConstraintLayout extends ConstraintLayout {
-
-        public TransparentConstraintLayout(Context context) {
-            super(context);
-        }
-
-        @Override
-        public boolean onInterceptTouchEvent(MotionEvent ev) {
-//            super.onInterceptTouchEvent(ev);
-            return false;
-        }
-    }
+    // Probably not needed
+//    public static class TransparentConstraintLayout extends ConstraintLayout {
+//
+//        public TransparentConstraintLayout(Context context) {
+//            super(context);
+//        }
+//
+//        @Override
+//        public boolean onInterceptTouchEvent(MotionEvent ev) {
+////            super.onInterceptTouchEvent(ev);
+//            return false;
+//        }
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        // Initialize global variables
         textCity = findViewById(R.id.textCity);
         textState = findViewById(R.id.textState);
         textLight = findViewById(R.id.textLight);
@@ -69,7 +70,7 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
         btnGesturePlay = findViewById(R.id.btnGesturePlay);
         geocoder = new Geocoder(this);
 
-
+        // Determines the boundaries of the gesture playground button
         // Some of this instruction was taken from https://stackoverflow.com/a/55308560
         btnGesturePlay.post(new Runnable() {
             @Override
@@ -88,14 +89,16 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
         });
         btnGesturePlay.setEnabled(false);
 
-
+        // Setup sensor manager and sensors
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
         ambientTempSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
 
+        // Register sensor listeners
         sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
         sensorManager.registerListener(this, ambientTempSensor, SensorManager.SENSOR_DELAY_NORMAL);
 
+        // Setup location manager and listener
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         locationListener = new LocationListener() {
             @Override
@@ -115,18 +118,20 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
             }
         };
 
+        // Set up gesture detector
+        gestureDetector = new GestureDetector(this, this);
 
+
+        // Check if location permissions are granted. If not,
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[] {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.INTERNET}, 42);
-            return;
         }
         else {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 50, 0, locationListener);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 100, 0, locationListener);
         }
 
 
-        gestureDetector = new GestureDetector(this, this);
     }
 
     @Override
