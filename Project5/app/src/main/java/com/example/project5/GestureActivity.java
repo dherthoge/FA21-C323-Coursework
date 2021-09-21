@@ -1,26 +1,12 @@
 package com.example.project5;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.annotation.SuppressLint;
-import android.content.res.Configuration;
-import android.graphics.Matrix;
-import android.graphics.PointF;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
-import android.view.ScaleGestureDetector;
-import android.view.View;
-import android.widget.TextView;
 
-public class GestureActivity extends AppCompatActivity implements
-        GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
+public class GestureActivity extends AppCompatActivity implements BallFragment.Updatable {
 
-    GestureDetector gestureDetector;
-    ScaleGestureDetector scaleGestureDetector;
     LogFragment logFragment;
     BallFragment ballFragment;
     String log = "";
@@ -36,9 +22,6 @@ public class GestureActivity extends AppCompatActivity implements
         setBallFragment();
 
 
-        gestureDetector = new GestureDetector(this, this);
-        gestureDetector.setOnDoubleTapListener(this);
-//        scaleGestureDetector = new ScaleGestureDetector(this, new MyOwnScaleGestureDetector());
 
 
     }
@@ -86,70 +69,9 @@ public class GestureActivity extends AppCompatActivity implements
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        gestureDetector.onTouchEvent(event);
-//        scaleGestureDetector.onTouchEvent(event);
-        return super.onTouchEvent(event);
-    }
-
-    @Override
-    public boolean onSingleTapConfirmed(MotionEvent motionEvent) {
-        log = "onSingleTapConfirmed\n" + log;
-        replaceLogFragment();
-        return false;
-    }
-
-    @Override
-    public boolean onDoubleTap(MotionEvent motionEvent) {
-        log = "onDoubleTap\n" + log;
-        replaceLogFragment();
-        return false;
-    }
-
-    @Override
-    public boolean onDoubleTapEvent(MotionEvent motionEvent) {
-        log = "onDoubleTapEvent\n" + log;
-        replaceLogFragment();
-        return false;
-    }
-
-    @Override
-    public boolean onDown(MotionEvent motionEvent) {
-        log = "onDown\n" + log;
-        replaceLogFragment();
-        return false;
-    }
-
-    @Override
-    public void onShowPress(MotionEvent motionEvent) {
-        log = "onShowPress\n" + log;
+    public void update(String logMsg) {
+        log = logMsg + log;
         replaceLogFragment();
     }
 
-    @Override
-    public boolean onSingleTapUp(MotionEvent motionEvent) {
-        log = "onSingleTapUp\n" + log;
-        replaceLogFragment();
-        return false;
-    }
-
-    @Override
-    public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-        log = "onScroll\n" + log;
-        replaceLogFragment();
-        return false;
-    }
-
-    @Override
-    public void onLongPress(MotionEvent motionEvent) {
-        log = "onLongPress\n" + log;
-        replaceLogFragment();
-    }
-
-    @Override
-    public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-        log = "onFling\n" + log;
-        replaceLogFragment();
-        return false;
-    }
 }
