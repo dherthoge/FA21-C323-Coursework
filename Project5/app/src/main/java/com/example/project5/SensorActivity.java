@@ -35,7 +35,6 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
 
     private TextView textCity, textState, textLight, textAmbientTemp;
     private Button btnGesturePlay;
-    private float xMin, xMax, yMin, yMax;
     private SensorManager sensorManager;
     private LocationManager locationManager;
     private Sensor lightSensor, pressureSensor;
@@ -44,21 +43,11 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
     GestureDetector gestureDetector;
 
 
-
-    // Probably not needed
-//    public static class TransparentConstraintLayout extends ConstraintLayout {
-//
-//        public TransparentConstraintLayout(Context context) {
-//            super(context);
-//        }
-//
-//        @Override
-//        public boolean onInterceptTouchEvent(MotionEvent ev) {
-////            super.onInterceptTouchEvent(ev);
-//            return false;
-//        }
-//    }
-
+    /**
+     * Initializes all View variables and sets up the light sensor, pressure sensor, and location
+     * manager.
+     * @param savedInstanceState The state of the previous instance
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,32 +61,14 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
         btnGesturePlay = findViewById(R.id.btnGesturePlay);
         geocoder = new Geocoder(this);
 
-btnGesturePlay.setOnTouchListener(new View.OnTouchListener() {
-    @Override
-    public boolean onTouch(View view, MotionEvent motionEvent) {
-        if (gestureDetector != null) gestureDetector.onTouchEvent(motionEvent);
-        return false;
-    }
-});
-
-        // Determines the boundaries of the gesture playground button
-        // Some of this instruction was taken from https://stackoverflow.com/a/55308560
-        btnGesturePlay.post(new Runnable() {
+        // Detects a fling on the button
+        btnGesturePlay.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void run() {
-
-                int[] location = new int[2];
-                btnGesturePlay.getLocationOnScreen(location);
-
-                xMin = location[0];
-                xMax = xMin + btnGesturePlay.getWidth();
-                yMin = location[1];
-                yMax = yMin + btnGesturePlay.getHeight();
-
-                Log.i("dimensions", xMin + " " + xMax + " " + yMin + " " + yMax);
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (gestureDetector != null) gestureDetector.onTouchEvent(motionEvent);
+                return false;
             }
         });
-        btnGesturePlay.setEnabled(true);
 
         // Setup sensor manager and sensors
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
