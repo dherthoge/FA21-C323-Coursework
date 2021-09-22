@@ -1,8 +1,11 @@
 package com.example.project5;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Fragment;
 import android.os.Bundle;
 
 public class GestureActivity extends AppCompatActivity implements BallFragment.Updatable {
@@ -17,9 +20,10 @@ public class GestureActivity extends AppCompatActivity implements BallFragment.U
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gesture);
 
-
-        setLogFragment();
-        setBallFragment();
+        if (savedInstanceState == null) {
+            setLogFragment();
+            setBallFragment();
+        }
     }
 
     /**
@@ -40,7 +44,6 @@ public class GestureActivity extends AppCompatActivity implements BallFragment.U
      * @param setting The currently active Setting
      */
     private void setBallFragment() {
-
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         ballFragment = new BallFragment();
         fragmentTransaction.replace(R.id.linear_layout_ball_fragment, ballFragment);
@@ -52,10 +55,10 @@ public class GestureActivity extends AppCompatActivity implements BallFragment.U
      * currently selected setting.
      * @param setting The currently active Setting
      */
-    private void replaceLogFragment() {
+    private void replaceLogFragment(String newLogMsg) {
         // Creates a Bundle to pass to the newly created SettingsFragment
         Bundle curSettingBundle = new Bundle();
-        curSettingBundle.putString("LOG", log);
+        curSettingBundle.putString("LOG", newLogMsg);
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         logFragment = new LogFragment();
@@ -78,12 +81,25 @@ public class GestureActivity extends AppCompatActivity implements BallFragment.U
         else if (dx < 0 && dy == 0) logMsg = "You moved left\n";
         else if (dx < 0 && dy < 0) logMsg = "You moved up-left\n";
         log = logMsg + log;
-        replaceLogFragment();
+        replaceLogFragment(log);
     }
 
     @Override
-    public void updateGesture(float dx, float dy) {
+    public void updateGesture(String logMsg) {
+        log = logMsg + log;
+        replaceLogFragment(log);
+    }
 
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        if (savedInstanceState != null) log = savedInstanceState.getString("LOG");
+        super.onRestoreInstanceState(savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString("LOG", log);
+        super.onSaveInstanceState(outState);
     }
 
 }

@@ -42,7 +42,7 @@ public class BallFragment extends Fragment {
     private View view;
     private ImageView imageBall;
     private GestureDetector gestureDetector;
-//    private GestureListener gestureListener;
+    private GestureListener gestureListener;
     private View.OnTouchListener onTouchListener;
     private ScaleGestureDetector scaleGestureDetector;
     private PointF originalPoint;
@@ -51,72 +51,72 @@ public class BallFragment extends Fragment {
 
     public interface Updatable {
         public void updateBallMovement(float dx, float dy);
-        public void updateGesture(float dx, float dy);
+        public void updateGesture(String logMsg);
     }
-/*
+
     public class GestureListener implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
+
+
+
+
+        /* Most gesture logs are commented out so they don't overwhelm the log, but if you want to
+        * log every gesture just uncomment the lines you want */
+
+
+
         @Override
         public boolean onSingleTapConfirmed(MotionEvent motionEvent) {
-//            Log.i("onSingleTapConfirmed: ", "here");
-            activityCommunicator.update("onSingleTapConfirmed\n");
+//            activityCommunicator.updateGesture("You single tap confirmed\n");
             return false;
         }
 
         @Override
         public boolean onDoubleTap(MotionEvent motionEvent) {
-//            Log.i("onDoubleTap: ", "here");
-            activityCommunicator.update("onDoubleTap\n");
+            activityCommunicator.updateGesture("You double tapped\n");
             return false;
         }
 
         @Override
         public boolean onDoubleTapEvent(MotionEvent motionEvent) {
-//            Log.i("onDoubleTapEvent: ", "here");
-            activityCommunicator.update("onDoubleTapEvent\n");
+//            activityCommunicator.updateGesture("You double tap evented\n");
             return false;
         }
 
         @Override
         public boolean onDown(MotionEvent motionEvent) {
-//            Log.i("onDown: ", "here");
-            activityCommunicator.update("onDown\n");
+//            activityCommunicator.updateGesture("You downed\n");
             return true;
         }
 
         @Override
-        public void onShowPress(MotionEvent motionEvent) {
-//            Log.i("onShowPress: ", "here");
-            activityCommunicator.update("onShowPress\n");
-        }
-
-        @Override
         public boolean onSingleTapUp(MotionEvent motionEvent) {
-//            Log.i("onSingleTapUp: ", "here");
-            activityCommunicator.update("onSingleTapUp\n");
+//            activityCommunicator.updateGesture("You single tap upped\n");
             return false;
         }
 
         @Override
+        public void onShowPress(MotionEvent motionEvent) {
+            activityCommunicator.updateGesture("You show pressed\n");
+        }
+
+        @Override
         public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-//            Log.i("onScroll: ", "here");
-            activityCommunicator.update("onScroll\n");
+//            activityCommunicator.updateGesture("You scrolled\n");
             return false;
         }
 
         @Override
         public void onLongPress(MotionEvent motionEvent) {
-//            Log.i("onLongPress: ", "here");
-            activityCommunicator.update("onLongPress\n");
+            activityCommunicator.updateGesture("You long pressed\n");
         }
 
         @Override
         public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-//            Log.i("onFling: ", "here");
-            activityCommunicator.update("onFling\n");
+//            activityCommunicator.updateGesture("You flung\n");
             return false;
         }
     }
-*/
+
     public class OnTouchListener implements View.OnTouchListener {
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -167,9 +167,9 @@ public class BallFragment extends Fragment {
         imageBall = view.findViewById(R.id.imageBall);
 
 
-//        gestureListener = new GestureListener();
-//        gestureDetector = new GestureDetector(getActivity(), gestureListener);
-//        gestureDetector.setOnDoubleTapListener(gestureListener);
+        gestureListener = new GestureListener();
+        gestureDetector = new GestureDetector(getActivity(), gestureListener);
+        gestureDetector.setOnDoubleTapListener(gestureListener);
 //        scaleGestureDetector = new ScaleGestureDetector(this, new MyOwnScaleGestureDetector());
 
         onTouchListener = new OnTouchListener();
@@ -178,7 +178,7 @@ public class BallFragment extends Fragment {
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-//                gestureDetector.onTouchEvent(motionEvent);
+                gestureDetector.onTouchEvent(motionEvent);
                 onTouchListener.onTouch(view, motionEvent);
                 return true;
             }
@@ -195,8 +195,6 @@ public class BallFragment extends Fragment {
             currentDy = savedInstanceState.getFloat("DY");
             imageBall.setX(currentDx);
             imageBall.setY(currentDy);
-//            translateImageBy();
-//            imageBall.setImageBitmap(savedInstanceState.getParcelable("IMAGE"));
         }
         super.onViewStateRestored(savedInstanceState);
     }
@@ -205,7 +203,6 @@ public class BallFragment extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         outState.putFloat("DX", currentDx);
         outState.putFloat("DY", currentDy);
-//        outState.putParcelable("IMAGE", ((BitmapDrawable) imageBall.getDrawable()).getBitmap());
         super.onSaveInstanceState(outState);
     }
 

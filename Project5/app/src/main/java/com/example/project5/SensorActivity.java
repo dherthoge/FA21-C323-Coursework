@@ -38,10 +38,12 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
     private float xMin, xMax, yMin, yMax;
     private SensorManager sensorManager;
     private LocationManager locationManager;
-    private Sensor lightSensor, ambientTempSensor;
+    private Sensor lightSensor, pressureSensor;
     private LocationListener locationListener;
     private Geocoder geocoder;
     GestureDetector gestureDetector;
+
+
 
     // Probably not needed
 //    public static class TransparentConstraintLayout extends ConstraintLayout {
@@ -70,6 +72,14 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
         btnGesturePlay = findViewById(R.id.btnGesturePlay);
         geocoder = new Geocoder(this);
 
+btnGesturePlay.setOnTouchListener(new View.OnTouchListener() {
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+        if (gestureDetector != null) gestureDetector.onTouchEvent(motionEvent);
+        return false;
+    }
+});
+
         // Determines the boundaries of the gesture playground button
         // Some of this instruction was taken from https://stackoverflow.com/a/55308560
         btnGesturePlay.post(new Runnable() {
@@ -87,12 +97,12 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
                 Log.i("dimensions", xMin + " " + xMax + " " + yMin + " " + yMax);
             }
         });
-        btnGesturePlay.setEnabled(false);
+        btnGesturePlay.setEnabled(true);
 
         // Setup sensor manager and sensors
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
-        ambientTempSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
+        pressureSensor = sensorManager.getDefaultSensor(Sensor.TYPE_PRESSURE);
 
         // Setup location manager and listener
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
@@ -132,8 +142,8 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
 
     @Override
     protected void onResume() {
-        sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_FASTEST);
-        sensorManager.registerListener(this, ambientTempSensor, SensorManager.SENSOR_DELAY_FASTEST);
+        sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, pressureSensor, SensorManager.SENSOR_DELAY_NORMAL);
 
         super.onResume();
     }
@@ -165,8 +175,8 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
 
         if (sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT)
             textLight.setText("Light: " + sensorEvent.values[0]);
-        if (sensorEvent.sensor.getType() == Sensor.TYPE_AMBIENT_TEMPERATURE)
-            textAmbientTemp.setText("Temp: " + sensorEvent.values[0]);
+        if (sensorEvent.sensor.getType() == Sensor.TYPE_PRESSURE)
+            textAmbientTemp.setText("Pressure: " + sensorEvent.values[0]);
     }
 
     @Override
@@ -174,17 +184,9 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
 
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event) {
-        if (gestureDetector != null) {
-            gestureDetector.onTouchEvent(event);
-        }
-        return super.onTouchEvent(event);
-    }
 
     @Override
     public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-
         startActivity(new Intent(this, GestureActivity.class));
         Log.i("onFling", "button flung");
         return false;

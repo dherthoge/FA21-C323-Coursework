@@ -36,10 +36,7 @@ public class LogFragment extends Fragment {
 
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            log = savedInstanceState.getString("LOG");
-            textLog.setText(log);
-        }
+        if (savedInstanceState != null) textLog.setText(savedInstanceState.getString("LOG"));
         super.onViewStateRestored(savedInstanceState);
     }
 
