@@ -94,10 +94,6 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
         lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
         ambientTempSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
 
-        // Register sensor listeners
-        sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
-        sensorManager.registerListener(this, ambientTempSensor, SensorManager.SENSOR_DELAY_NORMAL);
-
         // Setup location manager and listener
         locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         locationListener = new LocationListener() {
@@ -136,8 +132,8 @@ public class SensorActivity extends AppCompatActivity implements SensorEventList
 
     @Override
     protected void onResume() {
-        sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_NORMAL);
-        sensorManager.registerListener(this, ambientTempSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, lightSensor, SensorManager.SENSOR_DELAY_FASTEST);
+        sensorManager.registerListener(this, ambientTempSensor, SensorManager.SENSOR_DELAY_FASTEST);
 
         super.onResume();
     }

@@ -2,6 +2,8 @@ package com.example.project5;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -30,5 +32,20 @@ public class LogFragment extends Fragment {
 
         textLog.setText(log);
         return view;
+    }
+
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            log = savedInstanceState.getString("LOG");
+            textLog.setText(log);
+        }
+        super.onViewStateRestored(savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString("LOG", log);
+        super.onSaveInstanceState(outState);
     }
 }

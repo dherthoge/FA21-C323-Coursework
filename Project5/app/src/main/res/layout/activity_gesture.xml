@@ -9,20 +9,24 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/linear_layout_ball_fragment"
-        android:layout_width="0dp"
-        android:layout_height="355dp"
+        android:layout_width="409dp"
+        android:layout_height="475dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"></androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/linear_layout_log_fragment"
-        android:layout_width="390dp"
-        android:layout_height="365dp"
+        android:layout_width="377dp"
+        android:layout_height="240dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"></LinearLayout>
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linear_layout_ball_fragment"></LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

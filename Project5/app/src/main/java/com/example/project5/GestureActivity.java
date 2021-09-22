@@ -20,10 +20,6 @@ public class GestureActivity extends AppCompatActivity implements BallFragment.U
 
         setLogFragment();
         setBallFragment();
-
-
-
-
     }
 
     /**
@@ -69,9 +65,25 @@ public class GestureActivity extends AppCompatActivity implements BallFragment.U
     }
 
     @Override
-    public void update(String logMsg) {
+    public void updateBallMovement(float dx, float dy) {
+
+        // Determines direction starting at up and rotates clock wise
+        String logMsg = "";
+        if (dx == 0 && dy < 0) logMsg = "You moved up\n";
+        else if (dx > 0 && dy < 0) logMsg = "You moved up-right\n";
+        else if (dx > 0 && dy == 0) logMsg = "You moved right\n";
+        else if (dx > 0 && dy > 0) logMsg = "You moved down-right\n";
+        else if (dx == 0 && dy > 0) logMsg = "You moved down\n";
+        else if (dx < 0 && dy > 0) logMsg = "You moved down-left\n";
+        else if (dx < 0 && dy == 0) logMsg = "You moved left\n";
+        else if (dx < 0 && dy < 0) logMsg = "You moved up-left\n";
         log = logMsg + log;
         replaceLogFragment();
+    }
+
+    @Override
+    public void updateGesture(float dx, float dy) {
+
     }
 
 }

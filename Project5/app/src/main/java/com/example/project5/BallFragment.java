@@ -15,6 +15,7 @@ import android.os.Binder;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
@@ -25,8 +26,10 @@ import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewPropertyAnimator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ViewAnimator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,19 +38,22 @@ import android.widget.ImageView;
  */
 public class BallFragment extends Fragment {
 
-    public interface Updatable {
-        public void update(String logMsg);
-    }
-
     private Updatable activityCommunicator;
     private View view;
     private ImageView imageBall;
     private GestureDetector gestureDetector;
-    private GestureListener gestureListener;
+//    private GestureListener gestureListener;
     private View.OnTouchListener onTouchListener;
     private ScaleGestureDetector scaleGestureDetector;
-    private PointF translatePoint;
+    private PointF originalPoint;
+    private float currentDx, currentDy;
 
+
+    public interface Updatable {
+        public void updateBallMovement(float dx, float dy);
+        public void updateGesture(float dx, float dy);
+    }
+/*
     public class GestureListener implements GestureDetector.OnGestureListener, GestureDetector.OnDoubleTapListener {
         @Override
         public boolean onSingleTapConfirmed(MotionEvent motionEvent) {
@@ -110,47 +116,26 @@ public class BallFragment extends Fragment {
             return false;
         }
     }
-
+*/
     public class OnTouchListener implements View.OnTouchListener {
-        @SuppressLint("ClickableViewAccessibility")
         @Override
         public boolean onTouch(View view, MotionEvent motionEvent) {
 
             int action = motionEvent.getActionMasked(); //or getAction()
             switch (action) {
+
                 case MotionEvent.ACTION_DOWN:
-                    translatePoint = new PointF(motionEvent.getX(), motionEvent.getY());
-                    Log.v("TOUCH_APP","Action is DOWN");
+                    originalPoint = new PointF(motionEvent.getX(), motionEvent.getY());
                     break;
-                case MotionEvent.ACTION_MOVE:
-                    translatePoint.x = motionEvent.getX();
-                    translatePoint.y = motionEvent.getY();
-                    Log.v("TOUCH_APP","Action is MOVE");
+
+                case MotionEvent.ACTION_UP:
+                    float newX = motionEvent.getX();
+                    float newY = motionEvent.getY();
+                    currentDx = newX - originalPoint.x;
+                    currentDy = newY - originalPoint.y;
+                    translateImageBy();
                     break;
             }
-
-
-            // The following code was partially found at https://www.dev2qa.com/android-imageview-matrix-rotate-scale-skew-translate-example/
-            BitmapDrawable originalBitmapDrawable = (BitmapDrawable) imageBall.getDrawable();
-            final Bitmap originalBitmap = originalBitmapDrawable.getBitmap();
-            final int imageBallWidth = originalBitmap.getWidth();
-            final int imageBallHeight = originalBitmap.getHeight();
-            final Bitmap.Config originalImageConfig = originalBitmap.getConfig();
-
-            Log.i("onTouch", "imageBallWidth: " + imageBallWidth + "  imageBallHeight: " + imageBallHeight + "  translatePoint.x: " + translatePoint.x + "  translatePoint.y: " + translatePoint.y);
-            Log.i("onTouch", "imageX: " + imageBall.getX() + "imageY: " + imageBall.getY());
-            // According to the skew ratio of the picture, calculate the size of the image after the transformation.
-            Bitmap translateBitmap = Bitmap.createBitmap(imageBallWidth, imageBallHeight, originalImageConfig);
-
-            Canvas translateCanvas = new Canvas(translateBitmap);
-
-            Matrix translateMatrix = new Matrix();
-
-            // Set x y translate value..
-            translateMatrix.setTranslate(Math.abs(translatePoint.x-imageBall.getX()), Math.abs(translatePoint.y-imageBall.getY()));
-
-            translateCanvas.drawBitmap(originalBitmap, translateMatrix, null);
-            imageBall.setImageBitmap(translateBitmap);
             return false; //true if consumed. false to pass on to others
         }
     }
@@ -159,7 +144,6 @@ public class BallFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
 
     /**
      * Gets a reference to MainActivity.
@@ -183,26 +167,53 @@ public class BallFragment extends Fragment {
         imageBall = view.findViewById(R.id.imageBall);
 
 
-        gestureListener = new GestureListener();
-        gestureDetector = new GestureDetector(getActivity(), gestureListener);
-        gestureDetector.setOnDoubleTapListener(gestureListener);
+//        gestureListener = new GestureListener();
+//        gestureDetector = new GestureDetector(getActivity(), gestureListener);
+//        gestureDetector.setOnDoubleTapListener(gestureListener);
 //        scaleGestureDetector = new ScaleGestureDetector(this, new MyOwnScaleGestureDetector());
 
         onTouchListener = new OnTouchListener();
-        FrameLayout frameLayout = view.findViewById(R.id.frame_layout);
-        frameLayout.setOnTouchListener(onTouchListener);
+        imageBall.setOnTouchListener(onTouchListener);
 
         view.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
-                gestureDetector.onTouchEvent(motionEvent);
+//                gestureDetector.onTouchEvent(motionEvent);
                 onTouchListener.onTouch(view, motionEvent);
                 return true;
             }
         });
+
+
         return view;
     }
 
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        if(savedInstanceState != null) {
+            currentDx = savedInstanceState.getFloat("DX");
+            currentDy = savedInstanceState.getFloat("DY");
+            imageBall.setX(currentDx);
+            imageBall.setY(currentDy);
+//            translateImageBy();
+//            imageBall.setImageBitmap(savedInstanceState.getParcelable("IMAGE"));
+        }
+        super.onViewStateRestored(savedInstanceState);
+    }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putFloat("DX", currentDx);
+        outState.putFloat("DY", currentDy);
+//        outState.putParcelable("IMAGE", ((BitmapDrawable) imageBall.getDrawable()).getBitmap());
+        super.onSaveInstanceState(outState);
+    }
 
+    private void translateImageBy() {
+        ViewPropertyAnimator vpa = imageBall.animate();
+        vpa.translationXBy(currentDx);
+        vpa.translationYBy(currentDy);
+
+        activityCommunicator.updateBallMovement(currentDx, currentDy);
+    }
 }
