@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Project 7</string>
+    <string name="weather_activity">Weather Activity</string>
+    <string name="movie_activity">Movie Activity</string>
+    <string name="enter_city_or_lon_lat">Enter city or lat lon (with single space)</string>
+    <string name="greeting">Hello, Dylan Herthoge!</string>
+    <string name="movie_list">Movie List</string>
+    <string name="get_weather_data">Get Weather Data</string>
+    <string name="description">Description:</string>
+</resources>

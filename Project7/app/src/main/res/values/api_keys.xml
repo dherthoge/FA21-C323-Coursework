@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="open_weather_map_api_key">07a2dc29552bf955dd11e91ae4dc0d86</string>
+    <string name="the_movie_db_api_key">f1254e5f31b94571016e723e4ba637a2</string>
+</resources>

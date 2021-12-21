@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/iv_user_picture"
+        android:layout_width="104dp"
+        android:layout_height="83dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/me_with_banana" />
+
+    <TextView
+        android:id="@+id/tv_user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/dylan_herthoge"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_user_picture"
+        app:layout_constraintStart_toEndOf="@+id/iv_user_picture"
+        app:layout_constraintTop_toTopOf="@+id/iv_user_picture" />
+
+    <EditText
+        android:id="@+id/edt_expense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/name_of_expense"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/tv_expense"
+        app:layout_constraintTop_toBottomOf="@+id/tv_expense" />
+
+    <EditText
+        android:id="@+id/edt_cost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:ems="10"
+        android:hint="@string/dollar_amount"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/tv_cost"
+        app:layout_constraintTop_toBottomOf="@+id/tv_cost" />
+
+    <Spinner
+        android:id="@+id/sp_main_categories"
+        android:layout_width="200dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintStart_toStartOf="@+id/tv_expense"
+        app:layout_constraintTop_toBottomOf="@+id/tv_category" />
+
+    <TextView
+        android:id="@+id/tv_expense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/expense"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_user_picture" />
+
+    <TextView
+        android:id="@+id/tv_cost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/money_spent"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_expense"
+        app:layout_constraintTop_toBottomOf="@+id/edt_expense" />
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/date"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_expense"
+        app:layout_constraintTop_toBottomOf="@+id/edt_cost" />
+
+    <TextView
+        android:id="@+id/tv_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/category"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_expense"
+        app:layout_constraintTop_toBottomOf="@+id/tv_date_literal" />
+
+    <Button
+        android:id="@+id/btn_add_expense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="64dp"
+        android:onClick="addExpense"
+        android:text="@string/add_expense"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sp_main_categories" />
+
+    <Button
+        android:id="@+id/btn_view_expenses"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:onClick="viewExpenses"
+        android:text="@string/view_expenses"
+        app:layout_constraintStart_toStartOf="@+id/btn_add_expense"
+        app:layout_constraintTop_toBottomOf="@+id/btn_add_expense" />
+
+    <TextView
+        android:id="@+id/tv_date_literal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="@+id/tv_expense"
+        app:layout_constraintTop_toBottomOf="@+id/tv_date" />
+
+    <Button
+        android:id="@+id/btn_pick_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="128dp"
+        android:onClick="pickDate"
+        android:text="@string/pick_date"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_date_literal"
+        app:layout_constraintStart_toEndOf="@+id/tv_date"
+        app:layout_constraintTop_toTopOf="@+id/tv_date" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

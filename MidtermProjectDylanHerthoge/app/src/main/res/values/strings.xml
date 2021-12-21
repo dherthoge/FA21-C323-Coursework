@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Midterm Project Dylan Herthoge</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="display_favorites">Display Favorites</string>
+    <string name="save">SAVE</string>
+    <string name="cities">Cities</string>
+    <string name="historical_monuments">Historical Monuments</string>
+    <string name="camping_trekking">Camping/Trekking</string>
+    <string name="add_item">Add Item</string>
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
+    <string name="capture_image">Capture Image</string>
+    <string name="name">Name</string>
+    <string name="best_time_to_visit">Best Time to Visit</string>
+    <string name="nearest_metropolitan_location">Nearest Metropolitan Location</string>
+    <string name="enter_name">Enter name</string>
+    <string name="location">Location</string>
+    <string name="enter_monument_history">Enter monument history</string>
+    <string name="enter_nearest_metropolitan_location">Enter nearest metropolitan location</string>
+    <string name="enter_location_name">Enter location name</string>
+    <string name="tourist_spots">Tourist Spots</string>
+    <string name="enter_tourist_spots">Enter tourist spots</string>
+    <string name="enter_the_monument_s_history">Enter the monument\'s history</string>
+    <string name="history_of_monument">History of Monument</string>
+    <string name="ticket_price">Ticket Price</string>
+    <string name="enter_ticket_price">Enter ticket price</string>
+    <string name="card_view">Card View</string>
+    <string name="recycler_view">Recycler View</string>
+    <string name="close">Close</string>
+    <string name="map_display">MAP DISPLAY</string>
+    <string name="add_to_favorites">ADD TO FAVORITES</string>
+    <string name="remove_from_favorites">Remove from favorites</string>
+</resources>

@@ -1,0 +1,55 @@
+<resources>
+    <string name="app_name">Fitness Tracker</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="user_info">user_info</string>
+    <string name="saved_name_key">name</string>
+    <string name="saved_email_key">email</string>
+    <string name="saved_profile_picture_path_key">profile_picture_path</string>
+    <string name="is_logged_in_key">is_logged_in_key</string>
+
+    <string name="menu_exercises">Exercises</string>
+    <string name="menu_mode_of_training">Mode Of Training</string>
+    <string name="menu_daily_training">Daily Training</string>
+    <string name="menu_calendar">Calendar</string>
+
+    <string name="add_exercise">Add Exercise</string>
+    <string name="perform_exercise">Perform Exercise</string>
+
+    <string name="rb_easy">Easy</string>
+    <string name="rb_medium">Medium</string>
+    <string name="rb_hard">Hard</string>
+    <string name="rb_custom">Custom</string>
+    <string name="choose_a_mode">Choose a mode</string>
+
+    <string name="delete_exercise_msg">Are you sure you want to delete this exercise?</string>
+    <string name="yes_msg">YES</string>
+    <string name="no_msg">NO</string>
+
+    <string name="start">start</string>
+    <string name="done">done</string>
+    <string name="skip">skip</string>
+    <string name="time_remaining">%d</string>
+
+
+    <string name="alarm_on">Alarm On</string>
+    <string name="alarm_off">Alarm Off</string>
+
+    <string-array name="exercises">
+        <item>burpees</item>
+        <item>lunges</item>
+        <item>pushups</item>
+        <item>situps</item>
+        <item>squats</item>
+    </string-array>
+
+    <string name="channel_name">FitnessTracker</string>
+    <string name="channel_description">Fitness Tracker Alarm</string>
+    <string name="CHANNEL_ID">1</string>
+
+    <string name="invalid_time_msg">Cannot set an alarm for a time in the past!</string>
+    <string name="end_msg">You completed your training!</string>
+    ~</resources>

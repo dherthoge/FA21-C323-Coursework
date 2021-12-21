@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@id/nav_exercises">
+
+    <fragment
+        android:id="@+id/nav_mode_of_training"
+        android:name="com.c323finalproject.dherthog.ui.modeOfTraining.ModeOfTrainingFragment"
+        android:label="@string/menu_mode_of_training"
+        tools:layout="@layout/fragment_mode_of_training" />
+    <fragment
+        android:id="@+id/nav_exercises"
+        android:name="com.c323finalproject.dherthog.ui.exercises.ExercisesFragment"
+        android:label="@string/menu_exercises"
+        tools:layout="@layout/fragment_exercises" >
+        <action
+            android:id="@+id/action_nav_exercises_to_nav_add_exercise_fragment"
+            app:destination="@id/nav_add_exercise_fragment" />
+        <action
+            android:id="@+id/action_nav_exercises_to_nav_perform_exercise_fragment"
+            app:destination="@id/nav_perform_exercise_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_add_exercise_fragment"
+        android:name="com.c323finalproject.dherthog.ui.addExercise.AddExerciseFragment"
+        android:label="@string/add_exercise"
+        tools:layout="@layout/fragment_add_exercise" >
+        <action
+            android:id="@+id/action_nav_add_exercise_fragment_to_nav_exercises"
+            app:destination="@id/nav_exercises" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_perform_exercise_fragment"
+        android:name="com.c323finalproject.dherthog.ui.performExercise.PerformExerciseFragment"
+        android:label="@string/perform_exercise"
+        tools:layout="@layout/fragment_perform_exercise" >
+        <action
+            android:id="@+id/action_nav_perform_exercise_fragment_to_nav_exercises"
+            app:destination="@id/nav_exercises" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_daily_training"
+        android:name="com.c323finalproject.dherthog.ui.dailyTraining.DailyTrainingFragment"
+        android:label="@string/menu_daily_training"
+        tools:layout="@layout/fragment_daily_training" />
+    <fragment
+        android:id="@+id/nav_calendar"
+        android:name="com.c323finalproject.dherthog.ui.calendar.CalendarFragment"
+        android:label="@string/menu_calendar"
+        tools:layout="@layout/fragment_calendar" />
+</navigation>

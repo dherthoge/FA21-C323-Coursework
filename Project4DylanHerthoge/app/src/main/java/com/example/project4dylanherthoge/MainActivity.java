@@ -40,8 +40,15 @@ public class MainActivity extends AppCompatActivity implements SettingsFragment.
         textSettingInformation.setText(internetMsg);
 
         // Attaches fragments to the activity
-        attachPersonalInformationFragment();
-        attachSettingsFragment();
+        if (savedInstanceState == null) {
+            /* Activities have their onCreate called twice for some reason, so I need to check if it
+             * is being created for the second time, and if it is I don't want to create my fragments
+             * again
+             */
+            attachPersonalInformationFragment();
+            attachSettingsFragment();
+        }
+
 
         // Change colors if night mode is active
         processNightMode();

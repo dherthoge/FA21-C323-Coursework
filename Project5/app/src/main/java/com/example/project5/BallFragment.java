@@ -288,5 +288,4 @@ public class BallFragment extends Fragment {
         outState.putFloat("DY", currentDy);
         super.onSaveInstanceState(outState);
     }
-
 }

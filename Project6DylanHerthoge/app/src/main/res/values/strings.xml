@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Dylan Herthoge</string>
+    <string name="Title">Dylan Herthoge</string>
+    <string name="hint_current_location">Enter your current location</string>
+    <string name="hint_event_information">Enter event information here...</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="msg_pick_date">Pick Date</string>
+    <string name="hint_date">Date (click Pick Date)</string>
+    <string name="msg_all_events">All Events</string>
+    <string name="msg_add_event">Add Event</string>
+    <string name="msg_clear">Clear</string>
+    <string name="msg_display_locations">Display Locations</string>
+    <string name="msg_filter">Filter</string>
+</resources>

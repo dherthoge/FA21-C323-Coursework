@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/bottom_sheet.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.2421875" />
+        <entry key="app/src/main/res/layout/fragment_item.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_item2.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_item_list.xml" value="0.340625" />
+        <entry key="app/src/main/res/layout/fragment_item_list2.xml" value="0.2421875" />
+        <entry key="app/src/main/res/layout/fragment_song.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/fragment_song_list.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/fragment_video.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/layout/list_item.xml" value="0.35572916666666665" />
+        <entry key="app/src/main/res/menu/navigation_menu.xml" value="0.19791666666666666" />
+        <entry key="app/src/main/res/menu/navigation_meny.xml" value="0.35572916666666665" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK" />
+</project>

@@ -1,10 +1,10 @@
 package com.example.project4dylanherthoge;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -23,10 +23,6 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private Button buttonBattery;
     private Button buttonStorage;
 
-    // Colors for active and inactive buttons
-    private int purple500 = Color.rgb(98,0,238);
-    private int inactiveGrey = Color.rgb(163, 163, 163);
-
     // The currently selected setting
     private Setting curSetting;
     // All possible settings
@@ -43,6 +39,41 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     // Reference to MainActivity
     private settingsFragmentInterface activityCommunicator;
 
+    /**
+     * Preserves the currently selected setting.
+     * @param outState Bundle in which to place your saved state. This value cannot be null.
+     */
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString("SETTING", curSetting.name());
+        super.onSaveInstanceState(outState);
+    }
+
+    /**
+     * If the fragment is being re-created from a previous saved state, initialize the fragment from
+     * it's saved state.
+     * @param savedInstanceState If the fragment is being re-created from a previous saved state,
+     *                           this is the state.
+     */
+    @Override
+    public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+        if (savedInstanceState!= null) {
+            switch (savedInstanceState.getString("SETTING")) {
+                case "INTERNET":
+                    curSetting = Setting.INTERNET;
+                    break;
+                case "BATTERY":
+                    curSetting = Setting.BATTERY;
+                    break;
+                case "STORAGE":
+                    curSetting = Setting.STORAGE;
+                    break;
+            }
+
+            notifyActivityCommunicatorSettingChanged();
+        }
+    }
 
     /**
      * Creates a SettingsFragment object.
@@ -124,6 +155,13 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
         }
         setActiveButton();
 
+        notifyActivityCommunicatorSettingChanged();
+    }
+
+    /**
+     * Notifies the activity communicator that the selected setting has changed.
+     */
+    private void notifyActivityCommunicatorSettingChanged() {
         activityCommunicator.settingChanged(curSetting.name());
     }
 
@@ -133,19 +171,19 @@ public class SettingsFragment extends Fragment implements View.OnClickListener {
     private void setActiveButton() {
         switch (curSetting.toString()) {
             case "INTERNET":
-                buttonInternet.setTextColor(purple500);
-                buttonBattery.setTextColor(inactiveGrey);
-                buttonStorage.setTextColor(inactiveGrey);
+                buttonInternet.setTextColor(getResources().getColor(R.color.my_purple));
+                buttonBattery.setTextColor(getResources().getColor(R.color.inactive_grey));
+                buttonStorage.setTextColor(getResources().getColor(R.color.inactive_grey));
                 break;
             case "BATTERY":
-                buttonInternet.setTextColor(inactiveGrey);
-                buttonBattery.setTextColor(purple500);
-                buttonStorage.setTextColor(inactiveGrey);
+                buttonInternet.setTextColor(getResources().getColor(R.color.inactive_grey));
+                buttonBattery.setTextColor(getResources().getColor(R.color.my_purple));
+                buttonStorage.setTextColor(getResources().getColor(R.color.inactive_grey));
                 break;
             case "STORAGE":
-                buttonInternet.setTextColor(inactiveGrey);
-                buttonBattery.setTextColor(inactiveGrey);
-                buttonStorage.setTextColor(purple500);
+                buttonInternet.setTextColor(getResources().getColor(R.color.inactive_grey));
+                buttonBattery.setTextColor(getResources().getColor(R.color.inactive_grey));
+                buttonStorage.setTextColor(getResources().getColor(R.color.my_purple));
                 break;
         }
     }

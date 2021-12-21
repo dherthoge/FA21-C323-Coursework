@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">Project 9</string>
+    <string name="dylan_herthoge">Dylan Herthoge</string>
+    <string name="expense">Expense</string>
+    <string name="category">Category</string>
+    <string name="money_spent">Money Spent</string>
+    <string name="date">Date</string>
+    <string name="name_of_expense">Name of expense</string>
+    <string name="date_of_purchase">Date of purchase</string>
+    <string name="dollar_amount">Dollar amount</string>
+    <string name="add_expense">Add expense</string>
+    <string name="view_expenses">View expenses</string>
+    <string name="pick_date">pick date</string>
+    <string name="search">Search</string>
+    <string name="type_to_search">Type to search</string>
+    <string name="name">Name</string>
+    <string name="save">save</string>
+</resources>

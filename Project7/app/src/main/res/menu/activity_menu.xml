@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/action_weather" android:orderInCategory="1" android:title="@string/weather_activity"/>
+    <item android:id="@+id/action_movies" android:orderInCategory="2" android:title="@string/movie_activity"/>
+</menu>

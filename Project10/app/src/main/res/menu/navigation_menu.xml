@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_playlist"
+        android:title="My Playlist" />
+
+    <item
+        android:id="@+id/nav_songs"
+        android:title="Songs" />
+
+    <item
+        android:id="@+id/nav_videos"
+        android:title="Videos" />
+</menu>

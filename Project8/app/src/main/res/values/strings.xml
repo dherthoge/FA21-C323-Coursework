@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Project8</string>
+    <string name="msg_greeting">Hello, Dylan!</string>
+    <string name="play">Play</string>
+    <string name="otp_verification">OTP Verification</string>
+    <string name="enter_otp">Enter OTP</string>
+    <string name="verify_and_continue">verify and continue</string>
+    <string name="otp_code_placeholder">OTP Code</string>
+</resources>
